@@ -1,0 +1,63 @@
+@import 'tailwindcss';
+
+@theme {
+  /* palette: bright neutrals, navy headings, one blue action color.
+     Token names kept from the first palette so components need no edits. */
+  --color-paper: #ffffff;
+  --color-paper-2: #f3f5f8;
+  --color-ink: #19222d;
+  --color-ink-soft: #5c6675;
+  --color-green: #16375c; /* heading / footer navy */
+  --color-green-2: #1d4675;
+  --color-accent: #1a6fe8; /* primary action blue */
+  --color-accent-2: #1259c4;
+  --color-line: #e3e7ec;
+  --color-white: #ffffff;
+
+  /* type: one family, weight carries the hierarchy */
+  --font-sans: 'Inter', system-ui, sans-serif;
+  --font-urdu-heading: 'Noto Nastaliq Urdu', serif;
+  --font-urdu-body: 'Noto Naskh Arabic', serif;
+
+  /* one radius, one shadow */
+  --radius-card: 8px;
+  --shadow-card: 0 1px 2px rgb(25 34 45 / 0.06), 0 2px 8px rgb(25 34 45 / 0.05);
+}
+
+@layer base {
+  body {
+    @apply bg-paper text-ink font-sans antialiased;
+  }
+
+  h1, h2, h3, h4 {
+    @apply font-sans font-semibold tracking-tight;
+  }
+
+  /* Urdu: Nastaliq needs generous line-height or ascenders clip */
+  [dir='rtl'] body,
+  [dir='rtl'] {
+    font-family: var(--font-urdu-body);
+  }
+  [dir='rtl'] h1,
+  [dir='rtl'] h2,
+  [dir='rtl'] h3,
+  [dir='rtl'] h4 {
+    font-family: var(--font-urdu-heading);
+    line-height: 2;
+  }
+  [dir='rtl'] p,
+  [dir='rtl'] li {
+    line-height: 2.1;
+  }
+
+  :focus-visible {
+    @apply outline-2 outline-offset-2 outline-accent;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+}
