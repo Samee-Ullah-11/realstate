@@ -4,6 +4,7 @@ import { HelmetProvider } from 'react-helmet-async';
 import './i18n';
 import './styles/index.css';
 import App from './App.jsx';
+import ErrorBoundary from './components/ErrorBoundary';
 import site from './config/site';
 
 // Enable the web-font stylesheet (declared media="print" so it never blocks
@@ -24,9 +25,11 @@ const grace = new Promise((resolve) => setTimeout(resolve, 150));
 Promise.race([settingsReady, grace]).then(() => {
   createRoot(document.getElementById('root')).render(
     <StrictMode>
-      <HelmetProvider>
-        <App />
-      </HelmetProvider>
+      <ErrorBoundary>
+        <HelmetProvider>
+          <App />
+        </HelmetProvider>
+      </ErrorBoundary>
     </StrictMode>
   );
 });

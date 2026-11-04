@@ -109,6 +109,12 @@
     "title": "Page not found",
     "body": "This page does not exist, or the property is no longer listed."
   },
+  "errorScreen": {
+    "title": "Something went wrong",
+    "body": "An unexpected error occurred. Please reload the page or return to the homepage.",
+    "reload": "Reload page",
+    "home": "Go to homepage"
+  },
   "footer": {
     "browse": "Browse",
     "privacy": "Privacy",
