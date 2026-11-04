@@ -1,0 +1,12 @@
+{
+  "installCommand": "cd server && npm ci && cd ../client && npm ci",
+  "buildCommand": "cd client && npm run build && cd .. && mkdir -p .static",
+  "outputDirectory": ".static",
+  "functions": {
+    "api/index.js": {
+      "includeFiles": "client/dist/**",
+      "maxDuration": 15
+    }
+  },
+  "rewrites": [{ "source": "/(.*)", "destination": "/api" }]
+}

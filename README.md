@@ -92,6 +92,33 @@ works (e.g. a Gmail app password, or Brevo's free tier). Leave blank to disable.
 
 ## Deployment
 
+### Option A: Vercel
+
+The repo is Vercel-ready: `api/index.js` wraps the Express app as a serverless
+function and `vercel.json` builds the client and routes every request through
+it, so SEO meta injection, sitemap.xml, and the admin panel all work.
+
+1. Push the repo to GitHub, then on vercel.com → Add New Project → import it.
+   Leave Framework Preset as **Other**; `vercel.json` configures the build.
+2. Set the environment variables (Project → Settings → Environment Variables):
+   `MONGODB_URI` (Atlas), `JWT_SECRET`, `CLOUDINARY_*` (all three),
+   `SITE_URL` and `CLIENT_ORIGIN` — both set to your Vercel URL, e.g.
+   `https://your-project.vercel.app` (change to the real domain later).
+   Optional: `GOOGLE_PLACES_API_KEY`, `GOOGLE_PLACE_ID`, `SMTP_*`.
+3. Deploy. Run `npm run seed` once from your machine with `MONGODB_URI`
+   pointing at Atlas to create the admin user.
+4. In Atlas → Network Access, allow `0.0.0.0/0` (Vercel functions have no
+   fixed IP; access stays protected by the database password).
+
+Vercel limits to know: request bodies are capped at ~4.5 MB, so keep photo
+uploads under ~4 MB (the admin form's 5 MB limit is the outer bound). The
+Google-reviews in-memory cache resets whenever a function instance recycles,
+which means a few more Places API calls — the daily quota cap in Google Cloud
+is your protection. On the free plan the function sleeps when idle; the first
+request after a quiet period takes a couple of seconds.
+
+### Option B: one Node service (Railway, Render, a VPS)
+
 The server serves both the API and the built frontend with SEO meta injection,
 so you deploy **one Node service**:
 
