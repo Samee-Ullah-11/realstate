@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { Outlet, NavLink, useNavigate } from 'react-router-dom';
 import { apiGet, apiSend } from '../../lib/api';
 import site from '../../config/site';
+import useHideOnScroll from '../../hooks/useHideOnScroll';
 
 // Admin is deliberately plain, functional, and English-only.
 const links = [
@@ -15,6 +16,7 @@ const links = [
 export default function AdminLayout() {
   const navigate = useNavigate();
   const [checked, setChecked] = useState(false);
+  const hidden = useHideOnScroll();
 
   useEffect(() => {
     apiGet('/auth/me')
@@ -31,11 +33,18 @@ export default function AdminLayout() {
 
   return (
     <div dir="ltr" className="min-h-screen bg-paper-2">
-      <header className="sticky top-3 z-40 px-3 pt-3 sm:px-4">
+      <header
+        className={`sticky top-3 z-40 px-3 pt-3 sm:px-4 transition-transform duration-200 motion-reduce:transition-none ${
+          hidden ? '-translate-y-[120%]' : ''
+        }`}
+      >
         <div className="mx-auto max-w-5xl rounded-lg bg-green text-white shadow-md">
           <div className="flex flex-wrap items-center justify-between gap-2 px-5 pt-4">
             <span className="text-lg font-semibold">{site.businessName} — Admin</span>
-            <button onClick={logout} className="text-sm text-white/80 hover:text-white">
+            <button
+              onClick={logout}
+              className="rounded-card border border-white/40 px-3 py-1.5 text-sm font-medium text-white hover:bg-white hover:text-green transition-colors duration-150"
+            >
               Log out
             </button>
           </div>
