@@ -317,14 +317,25 @@ export default function PropertyForm() {
         <section className="mt-8 border-t border-line pt-5">
           <h2 className="text-lg">Photos</h2>
           <p className="text-sm text-ink-soft">First photo is the cover. JPEG, PNG, or WebP, max 5 MB each.</p>
-          <input
-            type="file"
-            accept="image/jpeg,image/png,image/webp"
-            multiple
-            className="mt-3 block text-sm"
-            onChange={(e) => upload([...e.target.files])}
-          />
-          {status === 'uploading' && <p className="mt-2 text-sm text-ink-soft">Uploading…</p>}
+          <label
+            className={`mt-3 flex cursor-pointer flex-col items-center justify-center gap-1 rounded-card border-2 border-dashed border-accent/40 bg-accent/5 px-4 py-8 text-center transition-colors hover:border-accent hover:bg-accent/10 ${status === 'uploading' ? 'pointer-events-none opacity-60' : ''}`}
+          >
+            <span className="text-3xl leading-none text-accent">+</span>
+            <span className="font-medium text-accent">
+              {status === 'uploading' ? 'Uploading…' : 'Click to add photos'}
+            </span>
+            <span className="text-xs text-ink-soft">You can select several at once</span>
+            <input
+              type="file"
+              accept="image/jpeg,image/png,image/webp"
+              multiple
+              className="sr-only"
+              onChange={(e) => {
+                upload([...e.target.files]);
+                e.target.value = '';
+              }}
+            />
+          </label>
           <div className="mt-4 grid grid-cols-2 sm:grid-cols-4 gap-3">
             {photos.map((photo, i) => (
               <div key={photo.publicId} className="rounded-card bg-white p-2 shadow-card">

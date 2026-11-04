@@ -10,6 +10,10 @@ export default function AdminPassword() {
     e.preventDefault();
     const form = e.target;
     setMessage('');
+    if (form.elements.next.value !== form.elements.confirm.value) {
+      setMessage('Error: the new passwords do not match.');
+      return;
+    }
     try {
       await apiSend('/auth/password', 'PATCH', {
         currentPassword: form.elements.current.value,
@@ -32,6 +36,10 @@ export default function AdminPassword() {
       <div className="mt-4">
         <Label htmlFor="next">New password (min 8 characters)</Label>
         <Input id="next" name="next" type="password" required minLength={8} autoComplete="new-password" />
+      </div>
+      <div className="mt-4">
+        <Label htmlFor="confirm">Confirm new password</Label>
+        <Input id="confirm" name="confirm" type="password" required minLength={8} autoComplete="new-password" />
       </div>
       {message && <p className="mt-3 text-sm">{message}</p>}
       <Button type="submit" className="mt-5">
