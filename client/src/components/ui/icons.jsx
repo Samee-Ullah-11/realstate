@@ -22,6 +22,36 @@ export function SearchIcon({ className = 'h-4.5 w-4.5' }) {
   );
 }
 
+export function MenuIcon({ className = 'h-5 w-5' }) {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      className={`stroke-current ${className}`}
+      fill="none"
+      strokeWidth="2.2"
+      strokeLinecap="round"
+      aria-hidden="true"
+    >
+      <path d="M4 6h16M4 12h16M4 18h16" />
+    </svg>
+  );
+}
+
+export function CloseIcon({ className = 'h-5 w-5' }) {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      className={`stroke-current ${className}`}
+      fill="none"
+      strokeWidth="2.2"
+      strokeLinecap="round"
+      aria-hidden="true"
+    >
+      <path d="M6 6l12 12M18 6 6 18" />
+    </svg>
+  );
+}
+
 export function PhoneIcon({ className = 'h-4.5 w-4.5' }) {
   return (
     <svg viewBox="0 0 24 24" className={`fill-current ${className}`} aria-hidden="true">

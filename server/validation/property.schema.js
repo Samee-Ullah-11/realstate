@@ -35,7 +35,17 @@ const create = base.refine((data) => data.priceOnCall || data.price != null, {
   path: ['price'],
 });
 
-const update = base.partial();
+// base.partial() would still apply each field's .default() and so turn a
+// partial PATCH into a reset of every omitted field. Strip defaults first:
+// a field that isn't sent must stay untouched.
+const update = z.object(
+  Object.fromEntries(
+    Object.entries(base.shape).map(([key, schema]) => [
+      key,
+      (schema instanceof z.ZodDefault ? schema.removeDefault() : schema).optional(),
+    ])
+  )
+);
 
 const listQuery = z.object({
   purpose: z.enum(['buy', 'rent']).optional(),

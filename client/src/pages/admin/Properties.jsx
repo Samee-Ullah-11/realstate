@@ -22,6 +22,15 @@ export default function AdminProperties() {
     load();
   };
 
+  const changeStatus = async (property, status) => {
+    try {
+      await apiSend(`/admin/properties/${property._id}`, 'PATCH', { status });
+      load();
+    } catch (e) {
+      setError(e.message);
+    }
+  };
+
   if (error) return <p className="text-accent">{error}</p>;
   if (!data) return <p className="text-ink-soft">Loading…</p>;
 
@@ -60,9 +69,18 @@ export default function AdminProperties() {
             <div className="flex items-center gap-1.5">
               {property.isDraft && <Badge>Draft</Badge>}
               {property.isFeatured && <Badge variant="featured">Featured</Badge>}
-              <Badge variant={property.status === 'available' ? 'available' : property.status === 'hidden' ? 'neutral' : property.status}>
-                {property.status}
-              </Badge>
+              <select
+                value={property.status}
+                onChange={(e) => changeStatus(property, e.target.value)}
+                aria-label={`Status of ${property.title.en}`}
+                className="h-8 cursor-pointer rounded-card border border-line bg-paper-2 px-2 text-xs font-medium uppercase tracking-wide text-ink focus:border-accent focus:outline-none"
+              >
+                {['available', 'sold', 'rented', 'hidden'].map((s) => (
+                  <option key={s} value={s}>
+                    {s}
+                  </option>
+                ))}
+              </select>
             </div>
             <div className="flex gap-2 text-sm">
               <Link to={`/admin/properties/${property._id}`} className="text-accent hover:underline">
