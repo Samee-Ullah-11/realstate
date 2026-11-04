@@ -48,7 +48,7 @@ export default function AdminLayout() {
               Log out
             </button>
           </div>
-          <nav className="flex gap-6 overflow-x-auto px-5 pb-3 pt-3 text-base">
+          <nav className="scrollbar-none flex gap-6 overflow-x-auto px-5 pb-3 pt-3 text-base">
             {links.map((link) => (
               <NavLink
                 key={link.to}
