@@ -24,14 +24,6 @@
   --shadow-card: 0 1px 2px rgb(25 34 45 / 0.06), 0 2px 8px rgb(25 34 45 / 0.05);
 }
 
-/* Scrollable rows (e.g. admin nav) stay swipeable without a visible bar. */
-@utility scrollbar-none {
-  scrollbar-width: none;
-  &::-webkit-scrollbar {
-    display: none;
-  }
-}
-
 @layer base {
   body {
     @apply bg-paper text-ink font-sans antialiased;
